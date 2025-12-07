@@ -1,5 +1,5 @@
 {
-  "name": "@convex-dev/work-stealing",
+  "name": "@fatagnus/work-stealing",
   "version": "0.1.0",
   "description": "Work-stealing pattern for distributed CLI workers coordinated by Convex",
   "keywords": [
@@ -10,13 +10,13 @@
     "workers",
     "job-queue"
   ],
-  "homepage": "https://github.com/get-convex/work-stealing#readme",
+  "homepage": "https://github.com/ozanturksever/work-stealing#readme",
   "bugs": {
-    "url": "https://github.com/get-convex/work-stealing/issues"
+    "url": "https://github.com/ozanturksever/work-stealing/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/get-convex/work-stealing.git"
+    "url": "git+https://github.com/ozanturksever/work-stealing.git"
   },
   "license": "Apache-2.0",
   "type": "module",

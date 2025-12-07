@@ -20,7 +20,7 @@ interface ConvexClientInterface {
  * 
  * @example
  * ```ts
- * import { Worker } from "@convex-dev/work-stealing/client/worker";
+ * import { Worker } from "@fatagnus/work-stealing/client/worker";
  * import { ConvexClient } from "convex/browser";
  * 
  * const client = new ConvexClient(process.env.CONVEX_URL!);

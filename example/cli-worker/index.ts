@@ -1,5 +1,5 @@
 import { ConvexClient } from "convex/browser";
-import { Worker } from "@convex-dev/work-stealing/client/worker";
+import { Worker } from "@fatagnus/work-stealing/client/worker";
 import { components } from "../convex/_generated/api";
 import dotenv from "dotenv";
 

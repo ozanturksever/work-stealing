@@ -8,7 +8,7 @@
     "worker": "npx tsx cli-worker/index.ts"
   },
   "dependencies": {
-    "@convex-dev/work-stealing": "file:..",
+    "@fatagnus/work-stealing": "file:..",
     "convex": "^1.17.0",
     "dotenv": "^16.0.0"
   },
