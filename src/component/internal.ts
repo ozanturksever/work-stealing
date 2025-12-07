@@ -1,7 +1,6 @@
 import { v } from "convex/values";
 import { internalMutation } from "./_generated/server.js";
 import { internal } from "./_generated/api.js";
-import type { Id } from "./_generated/dataModel.js";
 import { config } from "../shared/config.js";
 
 /**

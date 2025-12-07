@@ -20,7 +20,7 @@ interface ConvexClientInterface {
  * 
  * @example
  * ```ts
- * import { Worker } from "@fatagnus/work-stealing/client/worker";
+ * import { Worker } from "work-stealing/client/worker";
  * import { ConvexClient } from "convex/browser";
  * 
  * const client = new ConvexClient(process.env.CONVEX_URL!);
@@ -51,7 +51,7 @@ export class Worker {
   private onJobComplete?: (jobId: string, type: string, duration: number) => void;
   
   // API references - these need to be provided by the user since we don't have generated types
-  private api: {
+  public api: {
     workers: {
       isThereWork: any;
       giveMeWork: any;
@@ -146,11 +146,12 @@ export class Worker {
       this.onJobStart?.(work.jobId, work.type);
       
       // Start heartbeat
+      const currentWorkJobId = work.jobId;
       const heartbeat = setInterval(() => {
         this.client
           .mutation(this.api.workers.imStillWorking, {
             apiKey: this.apiKey,
-            jobId: work!.jobId,
+            jobId: currentWorkJobId,
           })
           .catch((err: Error) => {
             console.error("Heartbeat error:", err);
@@ -158,22 +159,24 @@ export class Worker {
       }, this.heartbeatInterval);
       
       this.currentJob = { id: work.jobId, heartbeat };
+      const currentJobId = work.jobId;
+      const currentJobType = work.type;
       
       try {
         // Find handler for this job type
-        const handler = this.handlers[work.type];
+        const handler = this.handlers[currentJobType];
         if (!handler) {
-          throw new Error(`No handler for job type: ${work.type}`);
+          throw new Error(`No handler for job type: ${currentJobType}`);
         }
         
         // Create context for handler
         const context: JobContext = {
-          jobId: work.jobId,
-          type: work.type,
+          jobId: currentJobId,
+          type: currentJobType,
           sendProgress: async (data: unknown) => {
             await this.client.mutation(this.api.workers.submitResult, {
               apiKey: this.apiKey,
-              jobId: work!.jobId,
+              jobId: currentJobId,
               result: data,
               state: "streaming" as ResultState,
             });
@@ -189,24 +192,23 @@ export class Worker {
           WorkItem | null
         >(this.api.workers.submitResult, {
           apiKey: this.apiKey,
-          jobId: work.jobId,
+          jobId: currentJobId,
           result,
           state: "success",
         });
         
         const duration = Date.now() - startTime;
-        const completedJobId = this.currentJob.id;
-        console.log(`Job ${completedJobId} completed in ${duration}ms`);
-        this.onJobComplete?.(completedJobId, work?.type ?? "unknown", duration);
+        console.log(`Job ${currentJobId} completed in ${duration}ms`);
+        this.onJobComplete?.(currentJobId, work?.type ?? "unknown", duration);
       } catch (error) {
         const err = error instanceof Error ? error : new Error(String(error));
-        console.error(`Job ${work.jobId} failed:`, err);
-        this.onError?.(err, work.jobId);
+        console.error(`Job ${currentJobId} failed:`, err);
+        this.onError?.(err, currentJobId);
         
         // Submit failure
         await this.client.mutation(this.api.workers.submitResult, {
           apiKey: this.apiKey,
-          jobId: work.jobId,
+          jobId: currentJobId,
           error: err.message,
           state: "failed" as ResultState,
         });
@@ -230,7 +232,7 @@ export class Worker {
  */
 export async function createWorker(
   convexUrl: string,
-  config: Omit<WorkerConfig, "convexUrl"> & { api: typeof Worker.prototype.api }
+  config: Omit<WorkerConfig, "convexUrl"> & { api: Worker["api"] }
 ): Promise<Worker> {
   // Dynamic import to avoid bundling ConvexClient in browser builds
   const { ConvexClient } = await import("convex/browser");

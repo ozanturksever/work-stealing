@@ -1,6 +1,8 @@
-# @fatagnus/work-stealing
+# work-stealing
 
 A Convex component for building distributed systems where CLI workers running on client machines are coordinated by a central Convex backend using the work-stealing pattern.
+
+> **Credit**: This implementation is based on the work-stealing pattern from [llama-farm-chat](https://github.com/get-convex/llama-farm-chat/) by the Convex team.
 
 ## Features
 
@@ -17,7 +19,7 @@ A Convex component for building distributed systems where CLI workers running on
 ## Installation
 
 ```bash
-npm install @fatagnus/work-stealing
+npm install work-stealing
 ```
 
 ## Setup
@@ -28,7 +30,7 @@ In your `convex/convex.config.ts`:
 
 ```typescript
 import { defineApp } from "convex/server";
-import workStealing from "@fatagnus/work-stealing/convex.config";
+import workStealing from "work-stealing/convex.config";
 
 const app = defineApp();
 app.use(workStealing);
@@ -39,7 +41,7 @@ export default app;
 
 ```typescript
 // convex/workStealing.ts
-import { WorkStealingClient } from "@fatagnus/work-stealing/client";
+import { WorkStealingClient } from "work-stealing/client";
 import { components } from "./_generated/api";
 
 export const workStealing = new WorkStealingClient(components.workStealing);
@@ -103,7 +105,7 @@ export const registerWorker = mutation({
 ```typescript
 // cli-worker/index.ts
 import { ConvexClient } from "convex/browser";
-import { Worker } from "@fatagnus/work-stealing/client/worker";
+import { Worker } from "work-stealing/client/worker";
 import { api, components } from "../convex/_generated/api";
 
 const client = new ConvexClient(process.env.CONVEX_URL!);
@@ -167,7 +169,7 @@ await worker.start();
 ## Configuration
 
 ```typescript
-import { WorkStealingClient, createConfig } from "@fatagnus/work-stealing/client";
+import { WorkStealingClient, createConfig } from "work-stealing/client";
 
 const workStealing = new WorkStealingClient(components.workStealing, {
   // Custom API key prefix
@@ -190,7 +192,7 @@ This component is designed to work with better-auth's API key plugin, but does n
 
 ```typescript
 import { auth } from "./auth"; // Your better-auth instance
-import { WorkStealingClient } from "@fatagnus/work-stealing/client";
+import { WorkStealingClient } from "work-stealing/client";
 
 // Create API key with better-auth
 const { key, id } = await auth.api.createKey({

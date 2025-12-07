@@ -96,6 +96,16 @@ export interface JobStatusResponse {
 }
 
 /**
+ * Batch job summary (subset of JobStatusResponse)
+ */
+export interface BatchJobSummary {
+  id: string;
+  status: JobStatus;
+  result?: unknown;
+  error?: string;
+}
+
+/**
  * Batch status response
  */
 export interface BatchStatusResponse {
@@ -107,7 +117,7 @@ export interface BatchStatusResponse {
   failed: number;
   timedOut: number;
   cancelled: number;
-  jobs: JobStatusResponse[];
+  jobs: BatchJobSummary[];
 }
 
 /**

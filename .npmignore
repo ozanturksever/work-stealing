@@ -1,0 +1,29 @@
+# Source files (we include src/ for Convex component bundling)
+# but exclude development files
+
+# Example and test directories
+example/
+
+# Development files
+*.log
+.env
+.env.*
+
+# TypeScript config (not needed in package)
+tsconfig.json
+
+# Lock files
+package-lock.json
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+
+# Test files
+*.test.ts
+*.spec.ts
+__tests__/

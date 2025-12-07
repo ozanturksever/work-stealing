@@ -16,7 +16,7 @@ const modules = import.meta.glob("./component/**/*.ts");
  * @example
  * ```ts
  * import { convexTest } from "convex-test";
- * import workStealingTest from "@fatagnus/work-stealing/test";
+ * import workStealingTest from "work-stealing/test";
  * import schema from "./schema";
  * 
  * const t = convexTest(schema, modules);

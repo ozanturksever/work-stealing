@@ -44,7 +44,7 @@ export interface WorkStealingClientOptions {
  * 
  * @example
  * ```ts
- * import { WorkStealingClient } from "@fatagnus/work-stealing/client";
+ * import { WorkStealingClient } from "work-stealing/client";
  * import { components } from "./_generated/api";
  * 
  * const workStealing = new WorkStealingClient(components.workStealing);

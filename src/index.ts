@@ -1,5 +1,5 @@
 /**
- * @fatagnus/work-stealing
+ * work-stealing
  * 
  * Work-stealing pattern for distributed CLI workers coordinated by Convex.
  * 
@@ -7,14 +7,14 @@
  * ```ts
  * // In your convex/convex.config.ts:
  * import { defineApp } from "convex/server";
- * import workStealing from "@fatagnus/work-stealing/convex.config";
+ * import workStealing from "work-stealing/convex.config";
  * 
  * const app = defineApp();
  * app.use(workStealing);
  * export default app;
  * 
  * // In your app code:
- * import { WorkStealingClient } from "@fatagnus/work-stealing/client";
+ * import { WorkStealingClient } from "work-stealing/client";
  * import { components } from "./_generated/api";
  * 
  * const workStealing = new WorkStealingClient(components.workStealing);
